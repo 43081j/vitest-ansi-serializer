@@ -1,0 +1,69 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`serializer > serialize > cursor.backward() 1`] = `"foo<cursor.backward count=1>"`;
+
+exports[`serializer > serialize > cursor.backward(n) 1`] = `"foo<cursor.backward count=2>"`;
+
+exports[`serializer > serialize > cursor.down() 1`] = `"foo<cursor.down count=1>"`;
+
+exports[`serializer > serialize > cursor.down(n) 1`] = `"foo<cursor.down count=2>"`;
+
+exports[`serializer > serialize > cursor.forward() 1`] = `"foo<cursor.forward count=1>"`;
+
+exports[`serializer > serialize > cursor.forward(n) 1`] = `"foo<cursor.forward count=2>"`;
+
+exports[`serializer > serialize > cursor.hide 1`] = `"foo<cursor.hide>"`;
+
+exports[`serializer > serialize > cursor.left 1`] = `"foo<cursor.left count=1>"`;
+
+exports[`serializer > serialize > cursor.move(1, 2) 1`] = `"foo<cursor.forward count=1><cursor.down count=2>"`;
+
+exports[`serializer > serialize > cursor.nextLine() 1`] = `"foo<cursor.nextLine count=1>"`;
+
+exports[`serializer > serialize > cursor.nextLine(n) 1`] = `"foo<cursor.nextLine count=1><cursor.nextLine count=1>"`;
+
+exports[`serializer > serialize > cursor.prevLine() 1`] = `"foo<cursor.prevLine count=1>"`;
+
+exports[`serializer > serialize > cursor.prevLine(n) 1`] = `"foo<cursor.prevLine count=1><cursor.prevLine count=1>"`;
+
+exports[`serializer > serialize > cursor.restore 1`] = `"foo<cursor.restore>"`;
+
+exports[`serializer > serialize > cursor.save 1`] = `"foo<cursor.save>"`;
+
+exports[`serializer > serialize > cursor.show 1`] = `"foo<cursor.show>"`;
+
+exports[`serializer > serialize > cursor.to(1, 2) 1`] = `"foo<cursor.moveTo line=3 column=2>"`;
+
+exports[`serializer > serialize > cursor.up 1`] = `"foo<cursor.up count=1>"`;
+
+exports[`serializer > serialize > cursor.up(n) 1`] = `"foo<cursor.up count=2>"`;
+
+exports[`serializer > serialize > erase.down(1) 1`] = `"foo<erase.down>"`;
+
+exports[`serializer > serialize > erase.line 1`] = `"foo<erase.line>"`;
+
+exports[`serializer > serialize > erase.lineEnd 1`] = `"foo<erase.lineEnd>"`;
+
+exports[`serializer > serialize > erase.lineStart 1`] = `"foo<erase.lineStart>"`;
+
+exports[`serializer > serialize > erase.lines(1) 1`] = `"foo<erase.line><cursor.left count=1>"`;
+
+exports[`serializer > serialize > erase.lines(10) 1`] = `"foo<erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.left count=1>"`;
+
+exports[`serializer > serialize > erase.screen 1`] = `"foo<erase.screen>"`;
+
+exports[`serializer > serialize > erase.up() 1`] = `"foo<erase.up>"`;
+
+exports[`serializer > serialize > erase.up(n) 1`] = `"foo<erase.up><erase.up>"`;
+
+exports[`serializer > serialize > multiple cursor movements 1`] = `"foo<cursor.up count=3>bar<cursor.backward count=10>"`;
+
+exports[`serializer > serialize > returns non-ansi string unchanged 1`] = `"choo choo"`;
+
+exports[`serializer > serialize > scroll.down() 1`] = `"foo<cursor.scrollDown count=1>"`;
+
+exports[`serializer > serialize > scroll.down(n) 1`] = `"foo<cursor.scrollDown count=1><cursor.scrollDown count=1>"`;
+
+exports[`serializer > serialize > scroll.up() 1`] = `"foo<cursor.scrollUp count=1>"`;
+
+exports[`serializer > serialize > scroll.up(n) 1`] = `"foo<cursor.scrollUp count=1><cursor.scrollUp count=1>"`;
