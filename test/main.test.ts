@@ -6,8 +6,9 @@ type NewSnapshotSerializer = Exclude<SnapshotSerializer, {print: unknown}>;
 
 const serializer = ansiSerializer as NewSnapshotSerializer;
 
-const mockConfig: Parameters<NewSnapshotSerializer['serialize']>[1] =
-  {} as never;
+const mockConfig: Parameters<NewSnapshotSerializer['serialize']>[1] = {
+  plugins: []
+} as never;
 const toString = (val: unknown) => String(val);
 const basicSerialize = (input: unknown) =>
   serializer.serialize(input, mockConfig, '', 0, [], toString);
