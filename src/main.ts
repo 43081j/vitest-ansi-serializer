@@ -65,7 +65,17 @@ function replaceAnsiCodes(str: string): string {
 const ansiSerializer: SnapshotSerializer = {
   serialize(val, config, indentation, depth, refs, printer) {
     const newValue = replaceAnsiCodes(val);
-    return printer(newValue, config, indentation, depth, refs);
+    // TODO (43081j): maybe there's a way to not do this?
+    // `printer` will call this plugin recursively since the `test` below
+    // will always pass for a string.
+    // Ideally, the `test` would test that this is a string we haven't already
+    // processed. You can't just test for ANSI codes though, as we may not
+    // replace all of them so would still enter recursion hell.
+    const newConfig = {
+      ...config,
+      plugins: config.plugins.filter((plugin) => plugin !== ansiSerializer)
+    };
+    return printer(newValue, newConfig, indentation, depth, refs);
   },
   test(val) {
     return typeof val === 'string';
