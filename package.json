@@ -5,8 +5,7 @@
   "description": "A vitest snapshot serializer which converts ANSI escapes to readable strings.",
   "main": "lib/main.js",
   "files": [
-    "lib",
-    "!lib/**/*.test.*"
+    "lib"
   ],
   "scripts": {
     "clean": "premove lib coverage",
