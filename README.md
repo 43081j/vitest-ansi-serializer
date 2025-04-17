@@ -18,7 +18,7 @@ you can use the serializer like so:
 
 ```ts
 import { expect } from 'vitest';
-import { ansiSerializer } from 'vitest-ansi-serializer';
+import ansiSerializer from 'vitest-ansi-serializer';
 
 expect.addSnapshotSerializer(ansiSerializer);
 ```

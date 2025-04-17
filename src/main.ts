@@ -62,7 +62,7 @@ function replaceAnsiCodes(str: string): string {
   });
 }
 
-export const ansiSerializer: SnapshotSerializer = {
+const ansiSerializer: SnapshotSerializer = {
   serialize(val, config, indentation, depth, refs, printer) {
     const newValue = replaceAnsiCodes(val);
     return printer(newValue, config, indentation, depth, refs);
@@ -71,3 +71,5 @@ export const ansiSerializer: SnapshotSerializer = {
     return typeof val === 'string';
   }
 };
+
+export default ansiSerializer;

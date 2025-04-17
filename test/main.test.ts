@@ -1,5 +1,5 @@
 import {test, expect, suite, SnapshotSerializer} from 'vitest';
-import {ansiSerializer} from './main.js';
+import ansiSerializer from '../src/main.js';
 import {cursor, erase, scroll} from 'sisteransi';
 
 type NewSnapshotSerializer = Exclude<SnapshotSerializer, {print: unknown}>;

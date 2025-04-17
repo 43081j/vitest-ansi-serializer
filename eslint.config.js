@@ -4,7 +4,7 @@ import {defineConfig} from 'eslint/config';
 
 export default defineConfig([
   {
-    files: ['src/**/*.ts'],
+    files: ['src/**/*.ts', 'test/**/*.ts'],
     plugins: {
       eslint: eslintjs,
       typescript: tseslint
