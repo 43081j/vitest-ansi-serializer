@@ -39,7 +39,7 @@
     "premove": "^4.0.0",
     "prettier": "^3.5.3",
     "sisteransi": "^1.0.5",
-    "typescript-eslint": "^8.31.1",
+    "typescript-eslint": "^8.32.0",
     "vitest": "^3.1.1"
   },
   "peerDependencies": {
