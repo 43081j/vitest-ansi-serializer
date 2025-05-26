@@ -40,9 +40,9 @@
     "prettier": "^3.5.3",
     "sisteransi": "^1.0.5",
     "typescript-eslint": "^8.32.1",
-    "vitest": "^3.1.1"
+    "vitest": "^3.1.4"
   },
   "peerDependencies": {
-    "vitest": "^3.1.1"
+    "vitest": "^3.1.4"
   }
 }
