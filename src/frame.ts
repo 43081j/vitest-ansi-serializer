@@ -5,6 +5,7 @@ export class Frame {
   #cursorX: number = 0;
   #cursorY: number = 0;
   #frames: string[] = [];
+  #savedCursor?: [number, number];
 
   get frames(): string[] {
     return [
@@ -21,21 +22,31 @@ export class Frame {
     return this.#buffer[this.#cursorY] || '';
   }
 
+  saveCursor(): void {
+    this.#savedCursor = [this.#cursorX, this.#cursorY];
+  }
+
+  restoreCursor(): void {
+    if (this.#savedCursor) {
+      this.cursorTo(this.#savedCursor[0], this.#savedCursor[1]);
+    }
+  }
+
   cursorUp(count: number): void {
     this.#cursorY = Math.max(0, this.#cursorY - count);
   }
 
   cursorDown(count: number): void {
-    this.#cursorY = Math.min(this.#buffer.length, this.#cursorY + count);
+    this.#cursorY = Math.min(this.#buffer.length - 1, this.#cursorY + count);
   }
 
   cursorTo(x: number, y: number): void {
-    this.#cursorY = Math.max(0, Math.min(this.#buffer.length, y));
-    this.#cursorX = Math.max(0, Math.min(this.line.length, x));
+    this.#cursorY = Math.max(0, Math.min(this.#buffer.length - 1, y));
+    this.#cursorX = Math.max(0, Math.min(this.line.length - 1, x));
   }
 
   cursorForward(count: number): void {
-    this.#cursorX = Math.min(this.line.length, this.#cursorX + count);
+    this.#cursorX = Math.min(this.line.length - 1, this.#cursorX + count);
   }
 
   cursorBackward(count: number): void {
@@ -49,21 +60,53 @@ export class Frame {
       return;
     }
 
-    for (let i = 0; i < parts.length - 1; i++) {
+    for (let i = 0; i < parts.length; i++) {
       const part = parts[i];
+      const bufferIndex = this.#cursorY + i;
+      const isFirst = i === 0;
+      const isLast = i === parts.length - 1;
+      const existingLine = this.#buffer[bufferIndex];
 
-      if (i === 0) {
-        const lastBufferPart = this.#buffer[this.#buffer.length - 1];
-        this.#buffer[this.#buffer.length - 1] = lastBufferPart + part;
+      if (existingLine !== undefined) {
+        if (isFirst) {
+          const prefix = existingLine.slice(0, this.#cursorX + 1);
+          this.#buffer[bufferIndex] = prefix + part;
+          this.cursorForward(part.length);
+        } else if (isLast) {
+          const suffix = existingLine.slice(this.#cursorX);
+          this.#buffer[bufferIndex] = part + suffix;
+          this.cursorTo(part.length, bufferIndex);
+        } else {
+          this.#buffer[bufferIndex] = part;
+          this.cursorTo(0, bufferIndex);
+        }
       } else {
         this.#buffer.push(part);
+        this.cursorTo(0, bufferIndex);
       }
     }
-
-    this.cursorTo(Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY);
   }
 
   cursorByCommand(code: CONTROL_CODE): void {
+    if (code.type === 'DEC' &&
+      (code.command === 'l' || code.command === 'h')) {
+      // Ignore cursor hide/show
+      return;
+    }
+    if (code.type === 'CSI' && (
+      code.command === 'T' || code.command === 'S')) {
+      // Ignore scroll commands
+      return;
+    }
+    if (code.type === 'ESC') {
+      if (code.command === '8') {
+        this.saveCursor();
+      } else if (code.command === '7') {
+        this.restoreCursor();
+      }
+      return;
+    }
+
     if (code.command === 'H') {
       this.cursorTo(
         code.params[0] ? parseInt(code.params[0]) - 1 : 0,
