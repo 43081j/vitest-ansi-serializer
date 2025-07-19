@@ -1,200 +1,235 @@
 import { Writable } from 'node:stream';
 import type {SnapshotSerializer} from 'vitest';
+import {
+  type CONTROL_CODE,
+  parse
+} from '@ansi-tools/parser';
 
-export interface TextToken {
-  kind: 'text';
-  value: string;
+const isCursorCommand = (code: CONTROL_CODE): boolean => {
+  return (
+    code.type === 'CSI' &&
+    (code.command === 'H' ||
+      code.command === 'A' ||
+      code.command === 'B' ||
+      code.command === 'C' ||
+      code.command === 'D' ||
+      code.command === 'E' ||
+      code.command === 'F' ||
+      code.command === 'G')
+  );
+};
+
+const isEraseCommand = (code: CONTROL_CODE): boolean => {
+  return (
+    code.type === 'CSI' &&
+    (code.command === 'J' || code.command === 'K')
+  );
 }
 
-export interface ForegroundColorToken {
-  kind: 'foregroundColor';
-  code: number;
-}
+class Frame {
+  #buffer: string[] = [];
+  #cursorX: number = 0;
+  #cursorY: number = 0;
+  #frames: string[] = [];
 
-export interface BackgroundColorToken {
-  kind: 'backgroundColor';
-  code: number;
-}
+  get frames(): string[] {
+    return this.#frames;
+  }
 
-export interface ResetToken {
-  kind: 'reset';
-}
+  get cursor(): [x: number, y: number] {
+    return [this.#cursorX, this.#cursorY];
+  }
 
-export interface CursorUpToken {
-  kind: 'cursorUp';
-  count: number;
-}
+  get line(): string {
+    return this.#buffer[this.#cursorY] || '';
+  }
 
-export interface CursorDownToken {
-  kind: 'cursorDown';
-  count: number;
-}
+  cursorUp(count: number): void {
+    this.#cursorY = Math.max(0, this.#cursorY - count);
+  }
 
-export interface CursorForwardToken {
-  kind: 'cursorForward';
-  count: number;
-}
+  cursorDown(count: number): void {
+    this.#cursorY = Math.min(this.#buffer.length, this.#cursorY + count);
+  }
 
-export interface CursorBackwardToken {
-  kind: 'cursorBackward';
-  count: number;
-}
+  cursorTo(x: number, y: number): void {
+    this.#cursorY = Math.max(0, Math.min(this.#buffer.length, y));
+    this.#cursorX = Math.max(0, Math.min(this.line.length, x));
+  }
 
-export interface CursorPositionToken {
-  kind: 'cursorPosition';
-  row: number;
-  col: number;
-}
+  cursorForward(count: number): void {
+    this.#cursorX = Math.min(this.line.length, this.#cursorX + count);
+  }
 
-export interface EraseDisplayToken {
-  kind: 'eraseDisplay';
-  mode: number;
-}
+  cursorBackward(count: number): void {
+    this.#cursorX = Math.max(0, this.#cursorX - count);
+  }
 
-export interface EraseLinesToken {
-  kind: 'eraseLines';
-  count: number;
-}
+  push(text: string): void {
+    const parts = text.split('\n');
 
-export interface EraseLineToken {
-  kind: 'eraseLine';
-  mode: number;
-}
-
-export type AnsiToken =
-  | TextToken
-  | ForegroundColorToken
-  | BackgroundColorToken
-  | ResetToken
-  | CursorUpToken
-  | CursorDownToken
-  | CursorForwardToken
-  | CursorBackwardToken
-  | CursorPositionToken
-  | EraseDisplayToken
-  | EraseLinesToken
-  | EraseLineToken;
-
-export function tokenize(input: string): AnsiToken[] {
-  const tokens: AnsiToken[] = [];
-  let i = 0;
-  let textBuffer = '';
-
-  const flushTextBuffer = () => {
-    if (textBuffer.length > 0) {
-      tokens.push({ kind: 'text', value: textBuffer });
-      textBuffer = '';
+    if (parts.length === 0) {
+      return;
     }
-  };
 
-  while (i < input.length) {
-    // Check for ANSI escape sequence
-    if (input[i] === '\x1b' && input[i + 1] === '[') {
-      flushTextBuffer();
+    for (let i = 0; i < parts.length - 1; i++) {
+      const part = parts[i];
 
-      // Find the end of the escape sequence
-      let j = i + 2;
-      let params = '';
-
-      // Collect parameters (digits, semicolons)
-      while (j < input.length && /[\d;]/.test(input[j])) {
-        params += input[j];
-        j++;
-      }
-
-      if (j < input.length) {
-        const command = input[j];
-        const paramNumbers = params ? params.split(';').map(p => parseInt(p, 10) || 0) : [];
-
-        switch (command) {
-          case 'm': // SGR (Select Graphic Rendition) - colors and styles
-            if (paramNumbers.length === 0 || paramNumbers[0] === 0) {
-              tokens.push({ kind: 'reset' });
-            } else {
-              for (const param of paramNumbers) {
-                if (param >= 30 && param <= 37) {
-                  tokens.push({ kind: 'foregroundColor', code: param });
-                } else if (param >= 40 && param <= 47) {
-                  tokens.push({ kind: 'backgroundColor', code: param });
-                } else if (param >= 90 && param <= 97) {
-                  tokens.push({ kind: 'foregroundColor', code: param });
-                } else if (param >= 100 && param <= 107) {
-                  tokens.push({ kind: 'backgroundColor', code: param });
-                } else if (param === 0) {
-                  tokens.push({ kind: 'reset' });
-                }
-              }
-            }
-            break;
-
-          case 'A': // Cursor Up
-            tokens.push({ kind: 'cursorUp', count: paramNumbers[0] || 1 });
-            break;
-
-          case 'B': // Cursor Down
-            tokens.push({ kind: 'cursorDown', count: paramNumbers[0] || 1 });
-            break;
-
-          case 'C': // Cursor Forward
-            tokens.push({ kind: 'cursorForward', count: paramNumbers[0] || 1 });
-            break;
-
-          case 'D': // Cursor Backward
-            tokens.push({ kind: 'cursorBackward', count: paramNumbers[0] || 1 });
-            break;
-
-          case 'H': // Cursor Position
-          case 'f': // Horizontal and Vertical Position
-            tokens.push({
-              kind: 'cursorPosition',
-              row: paramNumbers[0] || 1,
-              col: paramNumbers[1] || 1
-            });
-            break;
-
-          case 'J': // Erase Display
-            tokens.push({ kind: 'eraseDisplay', mode: paramNumbers[0] || 0 });
-            break;
-
-          case 'K': // Erase Line
-            tokens.push({ kind: 'eraseLine', mode: paramNumbers[0] || 0 });
-            break;
-
-          case 'M': // Delete Lines
-            tokens.push({ kind: 'eraseLines', count: paramNumbers[0] || 1 });
-            break;
-        }
-
-        i = j + 1;
+      if (i === 0) {
+        const lastBufferPart = this.#buffer[this.#buffer.length - 1];
+        this.#buffer[this.#buffer.length - 1] = lastBufferPart + part;
       } else {
-        // Malformed escape sequence, treat as text
-        textBuffer += input[i];
-        i++;
+        this.#buffer.push(part);
       }
-    } else {
-      textBuffer += input[i];
-      i++;
+    }
+
+    this.cursorTo(Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY);
+  }
+
+  cursorByCommand(code: CONTROL_CODE): void {
+    if (code.command === 'H') {
+      this.cursorTo(
+        code.params[0] ? parseInt(code.params[0]) - 1 : 0,
+        code.params[1] ? parseInt(code.params[1]) - 1 : 0
+      );
+      return;
+    }
+
+    const multiplier = code.params[0] ? parseInt(code.params[0]) : 1;
+
+    switch (code.command) {
+      case 'A':
+        this.cursorUp(multiplier);
+        break;
+      case 'B':
+        this.cursorDown(multiplier);
+        break;
+      case 'C':
+        this.cursorForward(multiplier);
+        break;
+      case 'D':
+        this.cursorBackward(multiplier);
+        break;
+      case 'E':
+        this.cursorTo(0, this.#cursorY + multiplier);
+        break;
+      case 'F':
+        this.cursorTo(0, this.#cursorY - multiplier);
+        break;
+      case 'G':
+        this.cursorTo(multiplier - 1, this.#cursorY);
+        break;
     }
   }
 
-  flushTextBuffer();
-  return tokens;
+  eraseAll(): void {
+    this.#pushFrame();
+    this.#buffer = [];
+    this.cursorTo(0, 0);
+  }
+
+  #pushFrame(): void {
+    this.#frames.push(this.#buffer.join('\n'));
+  }
+
+  eraseLine(): void {
+    this.#pushFrame();
+    this.#buffer[this.#cursorY] = '';
+    this.cursorTo(0, this.#cursorY);
+  }
+
+  eraseToEndOfLine(): void {
+    this.#pushFrame();
+    const line = this.#buffer[this.#cursorY];
+
+    if (line === undefined) {
+      return;
+    }
+
+    this.#buffer[this.#cursorY] = line.slice(0, this.#cursorX);
+  }
+
+  eraseToStartOfLine(): void {
+    this.#pushFrame();
+    const line = this.#buffer[this.#cursorY];
+
+    if (line === undefined) {
+      return;
+    }
+
+    this.#buffer[this.#cursorY] = ' '.repeat(this.#cursorX) + line.slice(this.#cursorX);
+  }
+
+  eraseToEnd(): void {
+  }
+
+  eraseByCommand(code: CONTROL_CODE): void {
+    const flag = code.params[0] ? parseInt(code.params[0]) : 0;
+    if (code.command === 'J') {
+      switch (flag) {
+        case 0:
+          this.eraseToEnd();
+          break;
+        case 1:
+          this.eraseToStart();
+          break;
+        case 2:
+          this.eraseAll();
+          break;
+      }
+    } else if (code.command === 'K') {
+      switch (flag) {
+        case 0:
+          this.eraseToEndOfLine();
+          break;
+        case 1:
+          this.eraseToStartOfLine();
+          break;
+        case 2:
+          this.eraseLine();
+          break;
+      }
+    }
+  }
 }
 
 export class Writer extends Writable {
-  public frames: string[] = [];
-	public buffer: string[] = [];
-  public cursorLine: number = 0;
-  public cursorColumn: number = 0;
+  public buffer: string[] = [];
 
-	_write(
-		chunk: string | Buffer,
-		_encoding: BufferEncoding,
-		callback: (error?: Error | null | undefined) => void
-	): void {
-		this.buffer.push(chunk.toString());
-		callback();
-	}
+  _write(
+    chunk: string | Buffer,
+    _encoding: BufferEncoding,
+    callback: (error?: Error | null | undefined) => void
+  ): void {
+    this.buffer.push(chunk.toString());
+    callback();
+  }
+
+  public get frames(): string[] {
+    const ast = parse(this.buffer.join(''));
+    const frame = new Frame();
+
+    for (const code of ast) {
+      switch (code.type) {
+        case 'CSI': {
+          if (isCursorCommand(code)) {
+            frame.cursorByCommand(code);
+          } else if (isEraseCommand(code)) {
+            frame.eraseByCommand(code);
+          }
+          break;
+        }
+        case 'TEXT': {
+          frame.push(code.raw);
+          break;
+        }
+        default:
+          continue;
+      }
+    }
+
+    return frame.frames;
+  }
 }
 
 const ansiSerializer: SnapshotSerializer = {

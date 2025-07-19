@@ -45,5 +45,8 @@
   },
   "peerDependencies": {
     "vitest": "^3.1.1"
+  },
+  "dependencies": {
+    "@ansi-tools/parser": "^1.0.5"
   }
 }
