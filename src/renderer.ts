@@ -161,6 +161,15 @@ class Frame {
   }
 
   eraseToEnd(): void {
+    this.#pushFrame();
+    this.eraseToEndOfLine();
+    this.#buffer.splice(this.#cursorY + 1);
+  }
+
+  eraseToStart(): void {
+    this.#pushFrame();
+    this.eraseToStartOfLine();
+    this.#buffer.splice(0, this.#cursorY);
   }
 
   eraseByCommand(code: CONTROL_CODE): void {
