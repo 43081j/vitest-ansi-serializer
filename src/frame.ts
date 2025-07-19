@@ -6,6 +6,7 @@ export class Frame {
   #cursorY: number = 0;
   #frames: string[] = [];
   #savedCursor?: [number, number];
+  #frameWritesEnabled: boolean = true;
 
   get frames(): string[] {
     return [
@@ -149,6 +150,9 @@ export class Frame {
   }
 
   #pushFrame(): void {
+    if (!this.#frameWritesEnabled) {
+      return;
+    }
     this.#frames.push(this.#buffer.join('\n'));
   }
 
@@ -182,13 +186,17 @@ export class Frame {
 
   eraseToEnd(): void {
     this.#pushFrame();
+    this.#frameWritesEnabled = false;
     this.eraseToEndOfLine();
+    this.#frameWritesEnabled = true;
     this.#buffer.splice(this.#cursorY + 1);
   }
 
   eraseToStart(): void {
     this.#pushFrame();
+    this.#frameWritesEnabled = false;
     this.eraseToStartOfLine();
+    this.#frameWritesEnabled = true;
     this.#buffer.splice(0, this.#cursorY);
     this.cursorTo(this.#cursorX, 0);
   }
