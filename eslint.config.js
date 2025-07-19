@@ -14,6 +14,7 @@ export default defineConfig([
       eslintjs.configs.recommended
     ],
     rules: {
+      'no-undef': 'off',
       'max-len': ['error', {
         ignoreTemplateLiterals: true,
         ignoreStrings: true

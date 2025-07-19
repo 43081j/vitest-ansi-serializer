@@ -3,7 +3,7 @@
     "target": "es2022",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "types": [],
+    "types": ["node"],
     "declaration": true,
     "outDir": "./lib",
     "isolatedModules": true,
