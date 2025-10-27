@@ -33,16 +33,16 @@
   },
   "homepage": "https://github.com/43081j/vitest-ansi-serializer#readme",
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
-    "@vitest/coverage-v8": "^3.2.4",
-    "eslint": "^9.35.0",
+    "@eslint/js": "^9.38.0",
+    "@vitest/coverage-v8": "^4.0.3",
+    "eslint": "^9.38.0",
     "premove": "^4.0.0",
     "prettier": "^3.6.2",
     "sisteransi": "^1.0.5",
-    "typescript-eslint": "^8.43.0",
-    "vitest": "^3.1.1"
+    "typescript-eslint": "^8.46.2",
+    "vitest": "^4.0.3"
   },
   "peerDependencies": {
-    "vitest": "^3.1.1"
+    "vitest": "^4.0.3"
   }
 }
