@@ -1,5 +1,39 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`serializer > serialize > / 1`] = `"foo</>"`;
+
+exports[`serializer > serialize > /bg 1`] = `"foo</bg>"`;
+
+exports[`serializer > serialize > /bold 1`] = `"foo</bold>"`;
+
+exports[`serializer > serialize > /fg 1`] = `"foo</fg>"`;
+
+exports[`serializer > serialize > /italic 1`] = `"foo</italic>"`;
+
+exports[`serializer > serialize > /underline 1`] = `"foo</underline>"`;
+
+exports[`serializer > serialize > bg:black 1`] = `"foo<bg:black>"`;
+
+exports[`serializer > serialize > bg:blue 1`] = `"foo<bg:blue>"`;
+
+exports[`serializer > serialize > bg:cyan 1`] = `"foo<bg:cyan>"`;
+
+exports[`serializer > serialize > bg:green 1`] = `"foo<bg:green>"`;
+
+exports[`serializer > serialize > bg:magenta 1`] = `"foo<bg:magenta>"`;
+
+exports[`serializer > serialize > bg:red 1`] = `"foo<bg:red>"`;
+
+exports[`serializer > serialize > bg:white 1`] = `"foo<bg:white>"`;
+
+exports[`serializer > serialize > bg:yellow 1`] = `"foo<bg:yellow>"`;
+
+exports[`serializer > serialize > black 1`] = `"foo<black>"`;
+
+exports[`serializer > serialize > blue 1`] = `"foo<blue>"`;
+
+exports[`serializer > serialize > bold 1`] = `"foo<bold>"`;
+
 exports[`serializer > serialize > cursor.backward() 1`] = `"foo<cursor.backward count=1>"`;
 
 exports[`serializer > serialize > cursor.backward(n) 1`] = `"foo<cursor.backward count=2>"`;
@@ -38,6 +72,12 @@ exports[`serializer > serialize > cursor.up 1`] = `"foo<cursor.up count=1>"`;
 
 exports[`serializer > serialize > cursor.up(n) 1`] = `"foo<cursor.up count=2>"`;
 
+exports[`serializer > serialize > cyan 1`] = `"foo<cyan>"`;
+
+exports[`serializer > serialize > dim 1`] = `"foo<dim>"`;
+
+exports[`serializer > serialize > dim 2`] = `"foo<dim>"`;
+
 exports[`serializer > serialize > erase.down(1) 1`] = `"foo<erase.down>"`;
 
 exports[`serializer > serialize > erase.line 1`] = `"foo<erase.line>"`;
@@ -56,7 +96,15 @@ exports[`serializer > serialize > erase.up() 1`] = `"foo<erase.up>"`;
 
 exports[`serializer > serialize > erase.up(n) 1`] = `"foo<erase.up><erase.up>"`;
 
+exports[`serializer > serialize > green 1`] = `"foo<green>"`;
+
+exports[`serializer > serialize > italic 1`] = `"foo<italic>"`;
+
+exports[`serializer > serialize > magenta 1`] = `"foo<magenta>"`;
+
 exports[`serializer > serialize > multiple cursor movements 1`] = `"foo<cursor.up count=3>bar<cursor.backward count=10>"`;
+
+exports[`serializer > serialize > red 1`] = `"foo<red>"`;
 
 exports[`serializer > serialize > returns non-ansi string unchanged 1`] = `"choo choo"`;
 
@@ -67,3 +115,9 @@ exports[`serializer > serialize > scroll.down(n) 1`] = `"foo<cursor.scrollDown c
 exports[`serializer > serialize > scroll.up() 1`] = `"foo<cursor.scrollUp count=1>"`;
 
 exports[`serializer > serialize > scroll.up(n) 1`] = `"foo<cursor.scrollUp count=1><cursor.scrollUp count=1>"`;
+
+exports[`serializer > serialize > underline 1`] = `"foo<underline>"`;
+
+exports[`serializer > serialize > white 1`] = `"foo<white>"`;
+
+exports[`serializer > serialize > yellow 1`] = `"foo<yellow>"`;
