@@ -13,6 +13,9 @@ const toString = (val: unknown) => String(val);
 const basicSerialize = (input: unknown) =>
   serializer.serialize(input, mockConfig, '', 0, [], toString);
 
+const ESC = '\x1B';
+const CSI = `${ESC}[`;
+
 const serializeCases: Array<[name: string, input: string]> = [
   ['cursor.backward()', `foo${cursor.backward()}`],
   ['cursor.backward(n)', `foo${cursor.backward(2)}`],
@@ -46,6 +49,33 @@ const serializeCases: Array<[name: string, input: string]> = [
   ['scroll.down(n)', `foo${scroll.down(2)}`],
   ['scroll.up()', `foo${scroll.up()}`],
   ['scroll.up(n)', `foo${scroll.up(2)}`],
+  ['/', `foo${CSI}0m`],
+  ['bold', `foo${CSI}1m`],
+  ['dim', `foo${CSI}2m`],
+  ['italic', `foo${CSI}3m`],
+  ['underline', `foo${CSI}4m`],
+  ['/bold', `foo${CSI}22m`],
+  ['/italic', `foo${CSI}23m`],
+  ['/underline', `foo${CSI}24m`],
+  ['black', `foo${CSI}30m`],
+  ['red', `foo${CSI}31m`],
+  ['green', `foo${CSI}32m`],
+  ['yellow', `foo${CSI}33m`],
+  ['blue', `foo${CSI}34m`],
+  ['magenta', `foo${CSI}35m`],
+  ['cyan', `foo${CSI}36m`],
+  ['white', `foo${CSI}37m`],
+  ['/fg', `foo${CSI}39m`],
+  ['dim', `foo${CSI}90m`],
+  ['bg:black', `foo${CSI}40m`],
+  ['bg:red', `foo${CSI}41m`],
+  ['bg:green', `foo${CSI}42m`],
+  ['bg:yellow', `foo${CSI}43m`],
+  ['bg:blue', `foo${CSI}44m`],
+  ['bg:magenta', `foo${CSI}45m`],
+  ['bg:cyan', `foo${CSI}46m`],
+  ['bg:white', `foo${CSI}47m`],
+  ['/bg', `foo${CSI}49m`],
   ['multiple cursor movements', `foo${cursor.up(3)}bar${cursor.backward(10)}`]
 ];
 suite('serializer', () => {

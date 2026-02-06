@@ -1,4 +1,5 @@
 import type {SnapshotSerializer} from 'vitest';
+import {colorCodes} from './colors.js';
 
 const cursorCodes = {
   '?25l': 'hide',
@@ -29,7 +30,7 @@ const eraseCodes = {
   c: 'reset'
 } as const;
 
-const pattern = /\x1B([78]|\[(?:\?25[lh]|\d+;\d+H|\d*[A-Z]+))/g;
+const pattern = /\x1B([78]|\[(?:\?25[lh]|\d+;\d+H|\d*[A-Z]+|\d+m))/g;
 const repeatedPattern = /^(?<count>\d*)(?<code>[a-zA-Z])$/;
 const lineColumnPattern = /^(?<line>\d+);(?<column>\d+)H$/;
 
@@ -38,6 +39,9 @@ function replaceAnsiCodes(str: string): string {
     const code = codeOrPrefixed.startsWith('[')
       ? codeOrPrefixed.slice(1)
       : codeOrPrefixed;
+    if (code in colorCodes) {
+      return `<${colorCodes[code as never]}>`;
+    }
     if (code in cursorCodes) {
       return `<cursor.${cursorCodes[code as never]}>`;
     }
