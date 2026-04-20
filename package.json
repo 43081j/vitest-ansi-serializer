@@ -35,11 +35,11 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@vitest/coverage-v8": "^4.1.4",
-    "eslint": "^10.2.0",
+    "eslint": "^10.2.1",
     "premove": "^4.0.0",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.3",
     "sisteransi": "^1.0.5",
-    "typescript-eslint": "^8.58.1",
+    "typescript-eslint": "^8.58.2",
     "vitest": "^4.0.3"
   },
   "peerDependencies": {
