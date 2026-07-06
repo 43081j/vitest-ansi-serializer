@@ -37,9 +37,9 @@
     "@vitest/coverage-v8": "^4.1.9",
     "eslint": "^10.6.0",
     "premove": "^4.0.0",
-    "prettier": "^3.9.1",
+    "prettier": "^3.9.4",
     "sisteransi": "^2.0.0",
-    "typescript-eslint": "^8.62.0",
+    "typescript-eslint": "^8.62.1",
     "vitest": "^4.0.3"
   },
   "peerDependencies": {
