@@ -34,10 +34,10 @@
   "homepage": "https://github.com/43081j/vitest-ansi-serializer#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@vitest/coverage-v8": "^5.0.0",
+    "@vitest/coverage-v8": "^5.0.1",
     "eslint": "^10.10.0",
     "premove": "^4.0.0",
-    "prettier": "^3.9.6",
+    "prettier": "^3.9.8",
     "sisteransi": "^2.0.0",
     "typescript-eslint": "^8.70.0",
     "vitest": "^5.0.0"
