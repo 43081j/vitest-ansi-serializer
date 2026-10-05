@@ -34,7 +34,18 @@ const pattern = /\x1B([78]|\[(?:\?25[lh]|\d+;\d+H|\d*[A-Z]+|\d+m))/g;
 const repeatedPattern = /^(?<count>\d*)(?<code>[a-zA-Z])$/;
 const lineColumnPattern = /^(?<line>\d+);(?<column>\d+)H$/;
 
-function replaceAnsiCodes(str: string): string {
+/**
+ * Serializes supported ANSI escape sequences into human-readable strings.
+ *
+ * @example
+ * ```ts
+ * import {replaceAnsiCodes} from 'vitest-ansi-serializer';
+ *
+ * const serialized = replaceAnsiCodes('\x1B[1mfoo\x1B[22m');
+ * //=> <bold>foo</bold>
+ * ```
+ */
+export function replaceAnsiCodes(str: string): string {
   return str.replaceAll(pattern, (str, codeOrPrefixed: string) => {
     const code = codeOrPrefixed.startsWith('[')
       ? codeOrPrefixed.slice(1)
@@ -66,6 +77,18 @@ function replaceAnsiCodes(str: string): string {
   });
 }
 
+/**
+ * A [vitest snapshot serializer](https://vitest.dev/guide/snapshot.html#custom-serializer)
+ * that turns ANSI escape sequences into human-readable strings.
+ *
+ * @example
+ * ```ts
+ * import { expect } from 'vitest';
+ * import ansiSerializer from 'vitest-ansi-serializer';
+ *
+ * expect.addSnapshotSerializer(ansiSerializer);
+ * ```
+ */
 const ansiSerializer: SnapshotSerializer = {
   serialize(val, config, indentation, depth, refs, printer) {
     const newValue = replaceAnsiCodes(val);
