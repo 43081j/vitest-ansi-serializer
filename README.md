@@ -31,21 +31,21 @@ The following ANSI codes are supported:
 <summary>Cursor</summary>
 <br />
 
-| Name                    | Code   | Serialization         |
-| ----------------------- | ------ | --------------------- |
-| Cursor hide             | `?25l` | `<cursor.hide>`       |
-| Cursor show             | `?25h` | `<cursor.show>`       |
-| Cursor save position    | `7`    | `<cursor.save>`       |
-| Cursor restore position | `8`    | `<cursor.restore>`    |
-| Cursor up               | `A`    | `<cursor.up>`         |
-| Cursor down             | `B`    | `<cursor.down>`       |
-| Cursor forward          | `C`    | `<cursor.forward>`    |
-| Cursor backward         | `D`    | `<cursor.backward>`   |
-| Cursor next line        | `E`    | `<cursor.nextLine>`   |
-| Cursor previous line    | `F`    | `<cursor.prevLine>`   |
-| Cursor left             | `G`    | `<cursor.left>`       |
-| Scroll up               | `S`    | `<cursor.scrollUp>`   |
-| Scroll down             | `T`    | `<cursor.scrollDown>` |
+| Code   | Description             | Serialization         |
+| ------ | ----------------------- | --------------------- |
+| `?25l` | Cursor hide             | `<cursor.hide>`       |
+| `?25h` | Cursor show             | `<cursor.show>`       |
+| `7`    | Cursor save position    | `<cursor.save>`       |
+| `8`    | Cursor restore position | `<cursor.restore>`    |
+| `A`    | Cursor up               | `<cursor.up>`         |
+| `B`    | Cursor down             | `<cursor.down>`       |
+| `C`    | Cursor forward          | `<cursor.forward>`    |
+| `D`    | Cursor backward         | `<cursor.backward>`   |
+| `E`    | Cursor next line        | `<cursor.nextLine>`   |
+| `F`    | Cursor previous line    | `<cursor.prevLine>`   |
+| `G`    | Cursor left             | `<cursor.left>`       |
+| `S`    | Scroll up               | `<cursor.scrollUp>`   |
+| `T`    | Scroll down             | `<cursor.scrollDown>` |
 
 </details>
 
@@ -53,15 +53,15 @@ The following ANSI codes are supported:
 <summary>Erase</summary>
 <br />
 
-| Name                | Code      | Serialization       |
-| ------------------- | --------- | ------------------- |
-| Erase screen        | `2J`      | `<erase.screen>`    |
-| Erase down          | `J`, `0J` | `<erase.down>`      |
-| Erase up            | `1J`      | `<erase.up>`        |
-| Erase to line end   | `K`, `0K` | `<erase.lineEnd>`   |
-| Erase to line start | `1K`      | `<erase.lineStart>` |
-| Erase line          | `2K`      | `<erase.line>`      |
-| Erase reset         | `c`       | `<erase.reset>`     |
+| Code      | Description         | Serialization       |
+| --------- | ------------------- | ------------------- |
+| `2J`      | Erase screen        | `<erase.screen>`    |
+| `J`, `0J` | Erase down          | `<erase.down>`      |
+| `1J`      | Erase up            | `<erase.up>`        |
+| `K`, `0K` | Erase to line end   | `<erase.lineEnd>`   |
+| `1K`      | Erase to line start | `<erase.lineStart>` |
+| `2K`      | Erase line          | `<erase.line>`      |
+| `c`       | Erase reset         | `<erase.reset>`     |
 
 </details>
 
@@ -69,16 +69,16 @@ The following ANSI codes are supported:
 <summary>Styles</summary>
 <br />
 
-| Name            | Code  | Serialization  |
-| --------------- | ----- | -------------- |
-| Reset           | `0m`  | `<reset>`      |
-| Bold            | `1m`  | `<bold>`       |
-| Dim             | `2m`  | `<dim>`        |
-| Italic          | `3m`  | `<italic>`     |
-| Underline       | `4m`  | `<underline>`  |
-| Reset bold      | `22m` | `</bold>`      |
-| Reset italic    | `23m` | `</italic>`    |
-| Reset underline | `24m` | `</underline>` |
+| Code  | Description     | Serialization  |
+| ----- | --------------- | -------------- |
+| `0m`  | Reset           | `<reset>`      |
+| `1m`  | Bold            | `<bold>`       |
+| `2m`  | Dim             | `<dim>`        |
+| `3m`  | Italic          | `<italic>`     |
+| `4m`  | Underline       | `<underline>`  |
+| `22m` | Reset bold      | `</bold>`      |
+| `23m` | Reset italic    | `</italic>`    |
+| `24m` | Reset underline | `</underline>` |
 
 </details>
 
@@ -86,27 +86,27 @@ The following ANSI codes are supported:
 <summary>Colors</summary>
 <br />
 
-| Name                       | Code  | Serialization  |
-| -------------------------- | ----- | -------------- |
-| Black                      | `30m` | `<black>`      |
-| Red                        | `31m` | `<red>`        |
-| Green                      | `32m` | `<green>`      |
-| Yellow                     | `33m` | `<yellow>`     |
-| Blue                       | `34m` | `<blue>`       |
-| Magenta                    | `35m` | `<magenta>`    |
-| Cyan                       | `36m` | `<cyan>`       |
-| White                      | `37m` | `<white>`      |
-| Default (reset)            | `39m` | `</fg>`        |
-| Dim (gray/bright black)    | `90m` | `<dim>`        |
-| Background black           | `40m` | `<bg:black>`   |
-| Background red             | `41m` | `<bg:red>`     |
-| Background green           | `42m` | `<bg:green>`   |
-| Background yellow          | `43m` | `<bg:yellow>`  |
-| Background blue            | `44m` | `<bg:blue>`    |
-| Background magenta         | `45m` | `<bg:magenta>` |
-| Background cyan            | `46m` | `<bg:cyan>`    |
-| Background white           | `47m` | `<bg:white>`   |
-| Default background (reset) | `49m` | `</bg>`        |
+| Code  | Description                | Serialization  |
+| ----- | -------------------------- | -------------- |
+| `30m` | Black                      | `<black>`      |
+| `31m` | Red                        | `<red>`        |
+| `32m` | Green                      | `<green>`      |
+| `33m` | Yellow                     | `<yellow>`     |
+| `34m` | Blue                       | `<blue>`       |
+| `35m` | Magenta                    | `<magenta>`    |
+| `36m` | Cyan                       | `<cyan>`       |
+| `37m` | White                      | `<white>`      |
+| `39m` | Default (reset)            | `</fg>`        |
+| `90m` | Dim (gray/bright black)    | `<dim>`        |
+| `40m` | Background black           | `<bg:black>`   |
+| `41m` | Background red             | `<bg:red>`     |
+| `42m` | Background green           | `<bg:green>`   |
+| `43m` | Background yellow          | `<bg:yellow>`  |
+| `44m` | Background blue            | `<bg:blue>`    |
+| `45m` | Background magenta         | `<bg:magenta>` |
+| `46m` | Background cyan            | `<bg:cyan>`    |
+| `47m` | Background white           | `<bg:white>`   |
+| `49m` | Default background (reset) | `</bg>`        |
 
 </details>
 
