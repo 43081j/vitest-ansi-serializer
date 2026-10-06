@@ -23,6 +23,20 @@ import ansiSerializer from 'vitest-ansi-serializer';
 expect.addSnapshotSerializer(ansiSerializer);
 ```
 
+### Serializing programmatically
+
+This package also exports a serialization utility for use in other testing frameworks:
+
+```ts
+import test from 'node:test';
+import assert from 'node:assert';
+import {replaceAnsiCodes} from 'vitest-ansi-serializer';
+
+test('serializes', () => {
+  assert.equal(replaceAnsiCodes('\x1B[1mfoo\x1B[22m'), '<bold>foo</bold>');
+});
+```
+
 ## Supported ANSI codes
 
 The following ANSI codes are supported:

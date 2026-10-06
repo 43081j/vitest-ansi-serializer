@@ -1,14 +1,27 @@
 export const colorCodes = {
   // Reset
   '0m': '/',
-  // Styles
+  // Modifiers
   '1m': 'bold',
   '2m': 'dim',
   '3m': 'italic',
   '4m': 'underline',
+  '5m': 'blink',
+  '7m': 'inverse',
+  '8m': 'hidden',
+  '9m': 'strikethrough',
+  '21m': 'doubleunderline',
+  '51m': 'framed',
+  '53m': 'overlined',
   '22m': '/bold',
   '23m': '/italic',
   '24m': '/underline',
+  '25m': '/blink',
+  '27m': '/inverse',
+  '28m': '/hidden',
+  '29m': '/strikethrough',
+  '54m': '/framed',
+  '55m': '/overlined',
   // Foreground colors
   '30m': 'black',
   '31m': 'red',
@@ -19,7 +32,15 @@ export const colorCodes = {
   '36m': 'cyan',
   '37m': 'white',
   '39m': '/fg',
-  '90m': 'dim',
+  // Bright foreground colors
+  '90m': 'grey',
+  '91m': 'redBright',
+  '92m': 'greenBright',
+  '93m': 'yellowBright',
+  '94m': 'blueBright',
+  '95m': 'magentaBright',
+  '96m': 'cyanBright',
+  '97m': 'whiteBright',
   // Background colors
   '40m': 'bg:black',
   '41m': 'bg:red',
@@ -29,5 +50,14 @@ export const colorCodes = {
   '45m': 'bg:magenta',
   '46m': 'bg:cyan',
   '47m': 'bg:white',
-  '49m': '/bg'
+  '49m': '/bg',
+  // Bright background colors
+  '100m': 'bg:grey',
+  '101m': 'bg:redBright',
+  '102m': 'bg:greenBright',
+  '103m': 'bg:yellowBright',
+  '104m': 'bg:blueBright',
+  '105m': 'bg:magentaBright',
+  '106m': 'bg:cyanBright',
+  '107m': 'bg:whiteBright'
 } as const;

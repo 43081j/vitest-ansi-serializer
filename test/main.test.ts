@@ -1,6 +1,7 @@
 import {test, expect, suite, SnapshotSerializer} from 'vitest';
 import ansiSerializer from '../src/main.js';
 import {cursor, erase, scroll} from 'sisteransi';
+import {styleText} from 'node:util';
 
 type NewSnapshotSerializer = Exclude<SnapshotSerializer, {print: unknown}>;
 
@@ -45,6 +46,7 @@ const serializeCases: Array<[name: string, input: string]> = [
   ['erase.screen', `foo${erase.screen}`],
   ['erase.up()', `foo${erase.up()}`],
   ['erase.up(n)', `foo${erase.up(2)}`],
+  ['erase.reset', `foo${ESC}c`],
   ['scroll.down()', `foo${scroll.down()}`],
   ['scroll.down(n)', `foo${scroll.down(2)}`],
   ['scroll.up()', `foo${scroll.up()}`],
@@ -54,9 +56,22 @@ const serializeCases: Array<[name: string, input: string]> = [
   ['dim', `foo${CSI}2m`],
   ['italic', `foo${CSI}3m`],
   ['underline', `foo${CSI}4m`],
+  ['blink', `foo${CSI}5m`],
+  ['inverse', `foo${CSI}7m`],
+  ['hidden', `foo${CSI}8m`],
+  ['strikethrough', `foo${CSI}9m`],
+  ['doubleunderline', `foo${CSI}21m`],
+  ['framed', `foo${CSI}51m`],
+  ['overlined', `foo${CSI}53m`],
   ['/bold', `foo${CSI}22m`],
   ['/italic', `foo${CSI}23m`],
   ['/underline', `foo${CSI}24m`],
+  ['/blink', `foo${CSI}25m`],
+  ['/inverse', `foo${CSI}27m`],
+  ['/hidden', `foo${CSI}28m`],
+  ['/strikethrough', `foo${CSI}29m`],
+  ['/framed', `foo${CSI}54m`],
+  ['/overlined', `foo${CSI}55m`],
   ['black', `foo${CSI}30m`],
   ['red', `foo${CSI}31m`],
   ['green', `foo${CSI}32m`],
@@ -66,7 +81,14 @@ const serializeCases: Array<[name: string, input: string]> = [
   ['cyan', `foo${CSI}36m`],
   ['white', `foo${CSI}37m`],
   ['/fg', `foo${CSI}39m`],
-  ['dim', `foo${CSI}90m`],
+  ['grey', `foo${CSI}90m`],
+  ['redBright', `foo${CSI}91m`],
+  ['greenBright', `foo${CSI}92m`],
+  ['yellowBright', `foo${CSI}93m`],
+  ['blueBright', `foo${CSI}94m`],
+  ['magentaBright', `foo${CSI}95m`],
+  ['cyanBright', `foo${CSI}96m`],
+  ['whiteBright', `foo${CSI}97m`],
   ['bg:black', `foo${CSI}40m`],
   ['bg:red', `foo${CSI}41m`],
   ['bg:green', `foo${CSI}42m`],
@@ -76,6 +98,24 @@ const serializeCases: Array<[name: string, input: string]> = [
   ['bg:cyan', `foo${CSI}46m`],
   ['bg:white', `foo${CSI}47m`],
   ['/bg', `foo${CSI}49m`],
+  ['bg:grey', `foo${CSI}100m`],
+  ['bg:redBright', `foo${CSI}101m`],
+  ['bg:greenBright', `foo${CSI}102m`],
+  ['bg:yellowBright', `foo${CSI}103m`],
+  ['bg:blueBright', `foo${CSI}104m`],
+  ['bg:magentaBright', `foo${CSI}105m`],
+  ['bg:cyanBright', `foo${CSI}106m`],
+  ['bg:whiteBright', `foo${CSI}107m`],
+  ['link (ST)', `${ESC}]8;;https://example.com${ESC}\\foo${ESC}]8;;${ESC}\\`],
+  [
+    'link with params (ST)',
+    `${ESC}]8;id=1;https://example.com${ESC}\\foo${ESC}]8;;${ESC}\\`
+  ],
+  ['link (BEL)', `${ESC}]8;;https://example.com\x07foo${ESC}]8;;\x07`],
+  [
+    'link with params (BEL)',
+    `${ESC}]8;id=1;https://example.com\x07foo${ESC}]8;;\x07`
+  ],
   ['multiple cursor movements', `foo${cursor.up(3)}bar${cursor.backward(10)}`]
 ];
 suite('serializer', () => {
@@ -86,6 +126,18 @@ suite('serializer', () => {
     });
 
     test.for(serializeCases)('%s', ([_name, input]) => {
+      expect(basicSerialize(input)).toMatchSnapshot();
+    });
+
+    test('styleText output', () => {
+      const options = {validateStream: false};
+      const input = [
+        styleText(['bold', 'red'], 'error', options),
+        styleText(['italic', 'gray'], 'note', options),
+        styleText(['bgBlueBright', 'whiteBright'], 'badge', options),
+        styleText(['underline', 'strikethrough'], 'old', options),
+        styleText('inverse', 'flipped', options)
+      ].join(' ');
       expect(basicSerialize(input)).toMatchSnapshot();
     });
   });
