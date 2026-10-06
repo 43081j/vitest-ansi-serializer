@@ -30,7 +30,12 @@ const eraseCodes = {
   c: 'reset'
 } as const;
 
-const pattern = /\x1B([78]|\[(?:\?25[lh]|\d+;\d+H|\d*[A-Z]+|\d+m))/g;
+const escSequencePattern = /[78c]/;
+const csiSequencePattern = /\[(?:\?25[lh]|\d+;\d+H|\d*[A-Z]+|\d+m)/;
+const pattern = new RegExp(
+  `\\x1B(${escSequencePattern.source}|${csiSequencePattern.source})`,
+  'g'
+);
 const repeatedPattern = /^(?<count>\d*)(?<code>[a-zA-Z])$/;
 const lineColumnPattern = /^(?<line>\d+);(?<column>\d+)H$/;
 
