@@ -30,9 +30,7 @@ export function replaceAnsiCodes(str: string): string {
       const url = hyperlinkMatch.groups.url;
       return url ? `<link url=${url}>` : '</link>';
     }
-    const code = codeOrPrefixed.startsWith('[')
-      ? codeOrPrefixed.slice(1)
-      : codeOrPrefixed;
+    const code = codeOrPrefixed.replace(/^\[/m, '');
     if (code in codes.color) {
       return `<${codes.color[code as never]}>`;
     }
@@ -44,16 +42,14 @@ export function replaceAnsiCodes(str: string): string {
     }
     const repeatMatch = code.match(repeatedPattern);
     if (repeatMatch?.groups) {
-      const count = repeatMatch.groups.count || '1';
-      const key = repeatMatch.groups.code;
+      const {count, code: key} = repeatMatch.groups;
       if (key in codes.repeatableCursor) {
-        return `<cursor.${codes.repeatableCursor[key as never]} count=${count}>`;
+        return `<cursor.${codes.repeatableCursor[key as never]} count=${count || 1}>`;
       }
     }
     const lineColumnMatch = code.match(lineColumnPattern);
-    if (lineColumnMatch) {
-      const lineNumber = lineColumnMatch.groups?.line;
-      const lineColumn = lineColumnMatch.groups?.column;
+    if (lineColumnMatch?.groups) {
+      const {line: lineNumber, column: lineColumn} = lineColumnMatch.groups;
       return `<cursor.moveTo line=${lineNumber} column=${lineColumn}>`;
     }
     return str;
