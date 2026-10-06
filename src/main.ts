@@ -27,7 +27,7 @@ export function replaceAnsiCodes(str: string): string {
   return str.replaceAll(pattern, (str, codeOrPrefixed: string) => {
     const hyperlinkMatch = codeOrPrefixed.match(hyperlinkPattern);
     if (hyperlinkMatch?.groups) {
-      const url = hyperlinkMatch.groups.url;
+      const {url} = hyperlinkMatch.groups;
       return url ? `<link url=${url}>` : '</link>';
     }
     const code = codeOrPrefixed.replace(/^\[/m, '');
