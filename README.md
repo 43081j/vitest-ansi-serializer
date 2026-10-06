@@ -44,6 +44,7 @@ The following ANSI codes are supported:
 | `E`    | Cursor next line        | `<cursor.nextLine>`   |
 | `F`    | Cursor previous line    | `<cursor.prevLine>`   |
 | `G`    | Cursor left             | `<cursor.left>`       |
+| `H`    | Cursor to line/column   | `<cursor.moveTo>`     |
 | `S`    | Scroll up               | `<cursor.scrollUp>`   |
 | `T`    | Scroll down             | `<cursor.scrollDown>` |
 
