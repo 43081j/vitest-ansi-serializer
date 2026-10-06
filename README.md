@@ -41,8 +41,11 @@ test('serializes', () => {
 
 The following ANSI codes are supported:
 
+<ul>
+
+<li>
 <details>
-<summary>Cursor</summary>
+<summary>Cursor codes</summary>
 <br />
 
 | Code   | Description             | Serialization         |
@@ -63,9 +66,11 @@ The following ANSI codes are supported:
 | `T`    | Scroll down             | `<cursor.scrollDown>` |
 
 </details>
+</li>
 
+<li>
 <details>
-<summary>Erase</summary>
+<summary>Erase codes</summary>
 <br />
 
 | Code      | Description            | Serialization       |
@@ -79,9 +84,11 @@ The following ANSI codes are supported:
 | `c`       | Reset to initial state | `<erase.reset>`     |
 
 </details>
+</li>
 
+<li>
 <details>
-<summary>Styles</summary>
+<summary>Style codes</summary>
 <br />
 
 | Code  | Description         | Serialization       |
@@ -109,49 +116,71 @@ The following ANSI codes are supported:
 | `55m` | Reset overlined     | `</overlined>`      |
 
 </details>
+</li>
 
+<li>
 <details>
-<summary>Colors</summary>
+<summary>Color codes</summary>
 <br />
 
-| Code   | Description                    | Serialization        |
-| ------ | ------------------------------ | -------------------- |
-| `30m`  | Black                          | `<black>`            |
-| `31m`  | Red                            | `<red>`              |
-| `32m`  | Green                          | `<green>`            |
-| `33m`  | Yellow                         | `<yellow>`           |
-| `34m`  | Blue                           | `<blue>`             |
-| `35m`  | Magenta                        | `<magenta>`          |
-| `36m`  | Cyan                           | `<cyan>`             |
-| `37m`  | White                          | `<white>`            |
-| `39m`  | Default (reset)                | `</fg>`              |
-| `90m`  | Grey (bright black)            | `<grey>`             |
-| `91m`  | Bright red                     | `<redBright>`        |
-| `92m`  | Bright green                   | `<greenBright>`      |
-| `93m`  | Bright yellow                  | `<yellowBright>`     |
-| `94m`  | Bright blue                    | `<blueBright>`       |
-| `95m`  | Bright magenta                 | `<magentaBright>`    |
-| `96m`  | Bright cyan                    | `<cyanBright>`       |
-| `97m`  | Bright white                   | `<whiteBright>`      |
-| `40m`  | Background black               | `<bg:black>`         |
-| `41m`  | Background red                 | `<bg:red>`           |
-| `42m`  | Background green               | `<bg:green>`         |
-| `43m`  | Background yellow              | `<bg:yellow>`        |
-| `44m`  | Background blue                | `<bg:blue>`          |
-| `45m`  | Background magenta             | `<bg:magenta>`       |
-| `46m`  | Background cyan                | `<bg:cyan>`          |
-| `47m`  | Background white               | `<bg:white>`         |
-| `49m`  | Default background (reset)     | `</bg>`              |
-| `100m` | Background grey (bright black) | `<bg:grey>`          |
-| `101m` | Background bright red          | `<bg:redBright>`     |
-| `102m` | Background bright green        | `<bg:greenBright>`   |
-| `103m` | Background bright yellow       | `<bg:yellowBright>`  |
-| `104m` | Background bright blue         | `<bg:blueBright>`    |
-| `105m` | Background bright magenta      | `<bg:magentaBright>` |
-| `106m` | Background bright cyan         | `<bg:cyanBright>`    |
-| `107m` | Background bright white        | `<bg:whiteBright>`   |
+| Code   | Description                | Serialization        |
+| ------ | -------------------------- | -------------------- |
+| `30m`  | Black                      | `<black>`            |
+| `31m`  | Red                        | `<red>`              |
+| `32m`  | Green                      | `<green>`            |
+| `33m`  | Yellow                     | `<yellow>`           |
+| `34m`  | Blue                       | `<blue>`             |
+| `35m`  | Magenta                    | `<magenta>`          |
+| `36m`  | Cyan                       | `<cyan>`             |
+| `37m`  | White                      | `<white>`            |
+| `39m`  | Default (reset)            | `</fg>`              |
+| `90m`  | Bright black               | `<grey>`             |
+| `91m`  | Bright red                 | `<redBright>`        |
+| `92m`  | Bright green               | `<greenBright>`      |
+| `93m`  | Bright yellow              | `<yellowBright>`     |
+| `94m`  | Bright blue                | `<blueBright>`       |
+| `95m`  | Bright magenta             | `<magentaBright>`    |
+| `96m`  | Bright cyan                | `<cyanBright>`       |
+| `97m`  | Bright white               | `<whiteBright>`      |
+| `40m`  | Background black           | `<bg:black>`         |
+| `41m`  | Background red             | `<bg:red>`           |
+| `42m`  | Background green           | `<bg:green>`         |
+| `43m`  | Background yellow          | `<bg:yellow>`        |
+| `44m`  | Background blue            | `<bg:blue>`          |
+| `45m`  | Background magenta         | `<bg:magenta>`       |
+| `46m`  | Background cyan            | `<bg:cyan>`          |
+| `47m`  | Background white           | `<bg:white>`         |
+| `49m`  | Default background (reset) | `</bg>`              |
+| `100m` | Background bright black    | `<bg:grey>`          |
+| `101m` | Background bright red      | `<bg:redBright>`     |
+| `102m` | Background bright green    | `<bg:greenBright>`   |
+| `103m` | Background bright yellow   | `<bg:yellowBright>`  |
+| `104m` | Background bright blue     | `<bg:blueBright>`    |
+| `105m` | Background bright magenta  | `<bg:magentaBright>` |
+| `106m` | Background bright cyan     | `<bg:cyanBright>`    |
+| `107m` | Background bright white    | `<bg:whiteBright>`   |
 
 </details>
+</li>
+
+<li>
+<details>
+<summary>Terminal links</summary>
+<br />
+
+`ST`- and `BEL`-terminated links are supported:
+
+```xml
+<!-- ST: \x1B]8;;https://example.com\x1B\\foo\x1B]8;;\x1B\\ -->
+<link url=https://example.com>foo</link>
+
+<!-- BEL: \x1B]8;id=1:foo=bar;file://path/to/file.txt\x07baz\x1B]8;;\x07 -->
+<link url=file://path/to/file.txt>baz</link>
+```
+
+</details>
+</li>
+</ul>
 
 These will be made human readable in snapshots in the form of XML-like tags:
 
