@@ -1,4 +1,35 @@
-export const colorCodes = {
+export const cursor = {
+  '?25l': 'hide',
+  '?25h': 'show',
+  '7': 'save',
+  '8': 'restore'
+} as const;
+
+export const repeatableCursor = {
+  A: 'up',
+  B: 'down',
+  C: 'forward',
+  D: 'backward',
+  E: 'nextLine',
+  F: 'prevLine',
+  G: 'left',
+  S: 'scrollUp',
+  T: 'scrollDown'
+} as const;
+
+export const erase = {
+  '2J': 'screen',
+  J: 'down',
+  '0J': 'down',
+  '1J': 'up',
+  K: 'lineEnd',
+  '0K': 'lineEnd',
+  '1K': 'lineStart',
+  '2K': 'line',
+  c: 'reset'
+} as const;
+
+export const color = {
   // Reset
   '0m': '/',
   // Modifiers
