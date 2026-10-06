@@ -68,15 +68,15 @@ The following ANSI codes are supported:
 <summary>Erase</summary>
 <br />
 
-| Code      | Description         | Serialization       |
-| --------- | ------------------- | ------------------- |
-| `2J`      | Erase screen        | `<erase.screen>`    |
-| `J`, `0J` | Erase down          | `<erase.down>`      |
-| `1J`      | Erase up            | `<erase.up>`        |
-| `K`, `0K` | Erase to line end   | `<erase.lineEnd>`   |
-| `1K`      | Erase to line start | `<erase.lineStart>` |
-| `2K`      | Erase line          | `<erase.line>`      |
-| `c`       | Erase reset         | `<erase.reset>`     |
+| Code      | Description            | Serialization       |
+| --------- | ---------------------- | ------------------- |
+| `2J`      | Erase screen           | `<erase.screen>`    |
+| `J`, `0J` | Erase down             | `<erase.down>`      |
+| `1J`      | Erase up               | `<erase.up>`        |
+| `K`, `0K` | Erase to line end      | `<erase.lineEnd>`   |
+| `1K`      | Erase to line start    | `<erase.lineStart>` |
+| `2K`      | Erase line             | `<erase.line>`      |
+| `c`       | Reset to initial state | `<erase.reset>`     |
 
 </details>
 
@@ -84,16 +84,29 @@ The following ANSI codes are supported:
 <summary>Styles</summary>
 <br />
 
-| Code  | Description     | Serialization  |
-| ----- | --------------- | -------------- |
-| `0m`  | Reset           | `<reset>`      |
-| `1m`  | Bold            | `<bold>`       |
-| `2m`  | Dim             | `<dim>`        |
-| `3m`  | Italic          | `<italic>`     |
-| `4m`  | Underline       | `<underline>`  |
-| `22m` | Reset bold      | `</bold>`      |
-| `23m` | Reset italic    | `</italic>`    |
-| `24m` | Reset underline | `</underline>` |
+| Code  | Description         | Serialization       |
+| ----- | ------------------- | ------------------- |
+| `0m`  | Reset               | `<reset>`           |
+| `1m`  | Bold                | `<bold>`            |
+| `2m`  | Dim                 | `<dim>`             |
+| `3m`  | Italic              | `<italic>`          |
+| `4m`  | Underline           | `<underline>`       |
+| `5m`  | Blink               | `<blink>`           |
+| `7m`  | Inverse             | `<inverse>`         |
+| `8m`  | Hidden              | `<hidden>`          |
+| `9m`  | Strikethrough       | `<strikethrough>`   |
+| `21m` | Double underline    | `<doubleunderline>` |
+| `51m` | Framed              | `<framed>`          |
+| `53m` | Overlined           | `<overlined>`       |
+| `22m` | Reset bold          | `</bold>`           |
+| `23m` | Reset italic        | `</italic>`         |
+| `24m` | Reset underline     | `</underline>`      |
+| `25m` | Reset blink         | `</blink>`          |
+| `27m` | Reset inverse       | `</inverse>`        |
+| `28m` | Reset hidden        | `</hidden>`         |
+| `29m` | Reset strikethrough | `</strikethrough>`  |
+| `54m` | Reset framed        | `</framed>`         |
+| `55m` | Reset overlined     | `</overlined>`      |
 
 </details>
 
@@ -101,27 +114,42 @@ The following ANSI codes are supported:
 <summary>Colors</summary>
 <br />
 
-| Code  | Description                | Serialization  |
-| ----- | -------------------------- | -------------- |
-| `30m` | Black                      | `<black>`      |
-| `31m` | Red                        | `<red>`        |
-| `32m` | Green                      | `<green>`      |
-| `33m` | Yellow                     | `<yellow>`     |
-| `34m` | Blue                       | `<blue>`       |
-| `35m` | Magenta                    | `<magenta>`    |
-| `36m` | Cyan                       | `<cyan>`       |
-| `37m` | White                      | `<white>`      |
-| `39m` | Default (reset)            | `</fg>`        |
-| `90m` | Dim (gray/bright black)    | `<dim>`        |
-| `40m` | Background black           | `<bg:black>`   |
-| `41m` | Background red             | `<bg:red>`     |
-| `42m` | Background green           | `<bg:green>`   |
-| `43m` | Background yellow          | `<bg:yellow>`  |
-| `44m` | Background blue            | `<bg:blue>`    |
-| `45m` | Background magenta         | `<bg:magenta>` |
-| `46m` | Background cyan            | `<bg:cyan>`    |
-| `47m` | Background white           | `<bg:white>`   |
-| `49m` | Default background (reset) | `</bg>`        |
+| Code   | Description                    | Serialization        |
+| ------ | ------------------------------ | -------------------- |
+| `30m`  | Black                          | `<black>`            |
+| `31m`  | Red                            | `<red>`              |
+| `32m`  | Green                          | `<green>`            |
+| `33m`  | Yellow                         | `<yellow>`           |
+| `34m`  | Blue                           | `<blue>`             |
+| `35m`  | Magenta                        | `<magenta>`          |
+| `36m`  | Cyan                           | `<cyan>`             |
+| `37m`  | White                          | `<white>`            |
+| `39m`  | Default (reset)                | `</fg>`              |
+| `90m`  | Grey (bright black)            | `<grey>`             |
+| `91m`  | Bright red                     | `<redBright>`        |
+| `92m`  | Bright green                   | `<greenBright>`      |
+| `93m`  | Bright yellow                  | `<yellowBright>`     |
+| `94m`  | Bright blue                    | `<blueBright>`       |
+| `95m`  | Bright magenta                 | `<magentaBright>`    |
+| `96m`  | Bright cyan                    | `<cyanBright>`       |
+| `97m`  | Bright white                   | `<whiteBright>`      |
+| `40m`  | Background black               | `<bg:black>`         |
+| `41m`  | Background red                 | `<bg:red>`           |
+| `42m`  | Background green               | `<bg:green>`         |
+| `43m`  | Background yellow              | `<bg:yellow>`        |
+| `44m`  | Background blue                | `<bg:blue>`          |
+| `45m`  | Background magenta             | `<bg:magenta>`       |
+| `46m`  | Background cyan                | `<bg:cyan>`          |
+| `47m`  | Background white               | `<bg:white>`         |
+| `49m`  | Default background (reset)     | `</bg>`              |
+| `100m` | Background grey (bright black) | `<bg:grey>`          |
+| `101m` | Background bright red          | `<bg:redBright>`     |
+| `102m` | Background bright green        | `<bg:greenBright>`   |
+| `103m` | Background bright yellow       | `<bg:yellowBright>`  |
+| `104m` | Background bright blue         | `<bg:blueBright>`    |
+| `105m` | Background bright magenta      | `<bg:magentaBright>` |
+| `106m` | Background bright cyan         | `<bg:cyanBright>`    |
+| `107m` | Background bright white        | `<bg:whiteBright>`   |
 
 </details>
 
