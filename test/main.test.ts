@@ -106,6 +106,16 @@ const serializeCases: Array<[name: string, input: string]> = [
   ['bg:magentaBright', `foo${CSI}105m`],
   ['bg:cyanBright', `foo${CSI}106m`],
   ['bg:whiteBright', `foo${CSI}107m`],
+  ['link (ST)', `${ESC}]8;;https://example.com${ESC}\\foo${ESC}]8;;${ESC}\\`],
+  [
+    'link with params (ST)',
+    `${ESC}]8;id=1;https://example.com${ESC}\\foo${ESC}]8;;${ESC}\\`
+  ],
+  ['link (BEL)', `${ESC}]8;;https://example.com\x07foo${ESC}]8;;\x07`],
+  [
+    'link with params (BEL)',
+    `${ESC}]8;id=1;https://example.com\x07foo${ESC}]8;;\x07`
+  ],
   ['multiple cursor movements', `foo${cursor.up(3)}bar${cursor.backward(10)}`]
 ];
 suite('serializer', () => {
