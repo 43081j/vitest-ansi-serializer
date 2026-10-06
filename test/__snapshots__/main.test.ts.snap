@@ -4,11 +4,23 @@ exports[`serializer > serialize > / 1`] = `"foo</>"`;
 
 exports[`serializer > serialize > /bg 1`] = `"foo</bg>"`;
 
+exports[`serializer > serialize > /blink 1`] = `"foo</blink>"`;
+
 exports[`serializer > serialize > /bold 1`] = `"foo</bold>"`;
 
 exports[`serializer > serialize > /fg 1`] = `"foo</fg>"`;
 
+exports[`serializer > serialize > /framed 1`] = `"foo</framed>"`;
+
+exports[`serializer > serialize > /hidden 1`] = `"foo</hidden>"`;
+
+exports[`serializer > serialize > /inverse 1`] = `"foo</inverse>"`;
+
 exports[`serializer > serialize > /italic 1`] = `"foo</italic>"`;
+
+exports[`serializer > serialize > /overlined 1`] = `"foo</overlined>"`;
+
+exports[`serializer > serialize > /strikethrough 1`] = `"foo</strikethrough>"`;
 
 exports[`serializer > serialize > /underline 1`] = `"foo</underline>"`;
 
@@ -16,21 +28,41 @@ exports[`serializer > serialize > bg:black 1`] = `"foo<bg:black>"`;
 
 exports[`serializer > serialize > bg:blue 1`] = `"foo<bg:blue>"`;
 
+exports[`serializer > serialize > bg:blueBright 1`] = `"foo<bg:blueBright>"`;
+
 exports[`serializer > serialize > bg:cyan 1`] = `"foo<bg:cyan>"`;
+
+exports[`serializer > serialize > bg:cyanBright 1`] = `"foo<bg:cyanBright>"`;
 
 exports[`serializer > serialize > bg:green 1`] = `"foo<bg:green>"`;
 
+exports[`serializer > serialize > bg:greenBright 1`] = `"foo<bg:greenBright>"`;
+
+exports[`serializer > serialize > bg:grey 1`] = `"foo<bg:grey>"`;
+
 exports[`serializer > serialize > bg:magenta 1`] = `"foo<bg:magenta>"`;
+
+exports[`serializer > serialize > bg:magentaBright 1`] = `"foo<bg:magentaBright>"`;
 
 exports[`serializer > serialize > bg:red 1`] = `"foo<bg:red>"`;
 
+exports[`serializer > serialize > bg:redBright 1`] = `"foo<bg:redBright>"`;
+
 exports[`serializer > serialize > bg:white 1`] = `"foo<bg:white>"`;
+
+exports[`serializer > serialize > bg:whiteBright 1`] = `"foo<bg:whiteBright>"`;
 
 exports[`serializer > serialize > bg:yellow 1`] = `"foo<bg:yellow>"`;
 
+exports[`serializer > serialize > bg:yellowBright 1`] = `"foo<bg:yellowBright>"`;
+
 exports[`serializer > serialize > black 1`] = `"foo<black>"`;
 
+exports[`serializer > serialize > blink 1`] = `"foo<blink>"`;
+
 exports[`serializer > serialize > blue 1`] = `"foo<blue>"`;
+
+exports[`serializer > serialize > blueBright 1`] = `"foo<blueBright>"`;
 
 exports[`serializer > serialize > bold 1`] = `"foo<bold>"`;
 
@@ -74,9 +106,11 @@ exports[`serializer > serialize > cursor.up(n) 1`] = `"foo<cursor.up count=2>"`;
 
 exports[`serializer > serialize > cyan 1`] = `"foo<cyan>"`;
 
+exports[`serializer > serialize > cyanBright 1`] = `"foo<cyanBright>"`;
+
 exports[`serializer > serialize > dim 1`] = `"foo<dim>"`;
 
-exports[`serializer > serialize > dim 2`] = `"foo<dim>"`;
+exports[`serializer > serialize > doubleunderline 1`] = `"foo<doubleunderline>"`;
 
 exports[`serializer > serialize > erase.down(1) 1`] = `"foo<erase.down>"`;
 
@@ -98,15 +132,31 @@ exports[`serializer > serialize > erase.up() 1`] = `"foo<erase.up>"`;
 
 exports[`serializer > serialize > erase.up(n) 1`] = `"foo<erase.up><erase.up>"`;
 
+exports[`serializer > serialize > framed 1`] = `"foo<framed>"`;
+
 exports[`serializer > serialize > green 1`] = `"foo<green>"`;
+
+exports[`serializer > serialize > greenBright 1`] = `"foo<greenBright>"`;
+
+exports[`serializer > serialize > grey 1`] = `"foo<grey>"`;
+
+exports[`serializer > serialize > hidden 1`] = `"foo<hidden>"`;
+
+exports[`serializer > serialize > inverse 1`] = `"foo<inverse>"`;
 
 exports[`serializer > serialize > italic 1`] = `"foo<italic>"`;
 
 exports[`serializer > serialize > magenta 1`] = `"foo<magenta>"`;
 
+exports[`serializer > serialize > magentaBright 1`] = `"foo<magentaBright>"`;
+
 exports[`serializer > serialize > multiple cursor movements 1`] = `"foo<cursor.up count=3>bar<cursor.backward count=10>"`;
 
+exports[`serializer > serialize > overlined 1`] = `"foo<overlined>"`;
+
 exports[`serializer > serialize > red 1`] = `"foo<red>"`;
+
+exports[`serializer > serialize > redBright 1`] = `"foo<redBright>"`;
 
 exports[`serializer > serialize > returns non-ansi string unchanged 1`] = `"choo choo"`;
 
@@ -118,8 +168,16 @@ exports[`serializer > serialize > scroll.up() 1`] = `"foo<cursor.scrollUp count=
 
 exports[`serializer > serialize > scroll.up(n) 1`] = `"foo<cursor.scrollUp count=1><cursor.scrollUp count=1>"`;
 
+exports[`serializer > serialize > strikethrough 1`] = `"foo<strikethrough>"`;
+
+exports[`serializer > serialize > styleText output 1`] = `"<bold><red>error</fg></bold> <italic><grey>note</fg></italic> <bg:blueBright><whiteBright>badge</fg></bg> <underline><strikethrough>old</strikethrough></underline> <inverse>flipped</inverse>"`;
+
 exports[`serializer > serialize > underline 1`] = `"foo<underline>"`;
 
 exports[`serializer > serialize > white 1`] = `"foo<white>"`;
 
+exports[`serializer > serialize > whiteBright 1`] = `"foo<whiteBright>"`;
+
 exports[`serializer > serialize > yellow 1`] = `"foo<yellow>"`;
+
+exports[`serializer > serialize > yellowBright 1`] = `"foo<yellowBright>"`;
