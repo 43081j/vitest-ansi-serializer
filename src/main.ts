@@ -78,8 +78,8 @@ export function replaceAnsiCodes(str: string): string {
 }
 
 /**
- * A [vitest snapshot serializer](https://vitest.dev/guide/snapshot.html#custom-serializer)
- * that turns ANSI escape sequences into human-readable strings.
+ * A vitest snapshot serializer that turns ANSI escape sequences into
+ * human-readable strings.
  *
  * @example
  * ```ts
@@ -88,6 +88,7 @@ export function replaceAnsiCodes(str: string): string {
  *
  * expect.addSnapshotSerializer(ansiSerializer);
  * ```
+ * @see {@link https://vitest.dev/guide/snapshot.html#custom-serializer}
  */
 const ansiSerializer: SnapshotSerializer = {
   serialize(val, config, indentation, depth, refs, printer) {
