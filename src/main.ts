@@ -1,5 +1,5 @@
 import type {SnapshotSerializer} from 'vitest';
-import {colorCodes} from './colors.js';
+import {colorCodes} from './colors.ts';
 
 const cursorCodes = {
   '?25l': 'hide',
