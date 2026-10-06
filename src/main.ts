@@ -32,10 +32,12 @@ const eraseCodes = {
 
 const escSequencePattern = /[78c]/;
 const csiSequencePattern = /\[(?:\?25[lh]|\d+;\d+H|\d*[A-Z]+|\d+m)/;
+const oscHyperlinkPattern = /\]8;[^;\x07\x1B]*;[^\x07\x1B]*(?:\x07|\x1B\\)/;
 const pattern = new RegExp(
-  `\\x1B(${escSequencePattern.source}|${csiSequencePattern.source})`,
+  `\\x1B(${escSequencePattern.source}|${csiSequencePattern.source}|${oscHyperlinkPattern.source})`,
   'g'
 );
+const hyperlinkPattern = /^\]8;[^;]*;(?<url>[^\x07\x1B]*)/;
 const repeatedPattern = /^(?<count>\d*)(?<code>[a-zA-Z])$/;
 const lineColumnPattern = /^(?<line>\d+);(?<column>\d+)H$/;
 
@@ -52,6 +54,11 @@ const lineColumnPattern = /^(?<line>\d+);(?<column>\d+)H$/;
  */
 export function replaceAnsiCodes(str: string): string {
   return str.replaceAll(pattern, (str, codeOrPrefixed: string) => {
+    const hyperlinkMatch = codeOrPrefixed.match(hyperlinkPattern);
+    if (hyperlinkMatch?.groups) {
+      const url = hyperlinkMatch.groups.url;
+      return url ? `<link url=${url}>` : '</link>';
+    }
     const code = codeOrPrefixed.startsWith('[')
       ? codeOrPrefixed.slice(1)
       : codeOrPrefixed;

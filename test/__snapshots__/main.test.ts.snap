@@ -146,6 +146,14 @@ exports[`serializer > serialize > inverse 1`] = `"foo<inverse>"`;
 
 exports[`serializer > serialize > italic 1`] = `"foo<italic>"`;
 
+exports[`serializer > serialize > link (BEL) 1`] = `"<link url=https://example.com>foo</link>"`;
+
+exports[`serializer > serialize > link (ST) 1`] = `"<link url=https://example.com>foo</link>"`;
+
+exports[`serializer > serialize > link with params (BEL) 1`] = `"<link url=https://example.com>foo</link>"`;
+
+exports[`serializer > serialize > link with params (ST) 1`] = `"<link url=https://example.com>foo</link>"`;
+
 exports[`serializer > serialize > magenta 1`] = `"foo<magenta>"`;
 
 exports[`serializer > serialize > magentaBright 1`] = `"foo<magentaBright>"`;
