@@ -90,6 +90,8 @@ exports[`serializer > serialize > erase.lines(1) 1`] = `"foo<erase.line><cursor.
 
 exports[`serializer > serialize > erase.lines(10) 1`] = `"foo<erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.up count=1><erase.line><cursor.left count=1>"`;
 
+exports[`serializer > serialize > erase.reset 1`] = `"foo<erase.reset>"`;
+
 exports[`serializer > serialize > erase.screen 1`] = `"foo<erase.screen>"`;
 
 exports[`serializer > serialize > erase.up() 1`] = `"foo<erase.up>"`;

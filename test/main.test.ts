@@ -45,6 +45,7 @@ const serializeCases: Array<[name: string, input: string]> = [
   ['erase.screen', `foo${erase.screen}`],
   ['erase.up()', `foo${erase.up()}`],
   ['erase.up(n)', `foo${erase.up(2)}`],
+  ['erase.reset', `foo${ESC}c`],
   ['scroll.down()', `foo${scroll.down()}`],
   ['scroll.down(n)', `foo${scroll.down(2)}`],
   ['scroll.up()', `foo${scroll.up()}`],
