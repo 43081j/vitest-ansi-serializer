@@ -23,7 +23,7 @@ import ansiSerializer from 'vitest-ansi-serializer';
 expect.addSnapshotSerializer(ansiSerializer);
 ```
 
-### Serializing yourself
+### Serializing programmatically
 
 This package also exports a serialization utility for use in other testing frameworks:
 
