@@ -3,10 +3,7 @@
     "target": "es2022",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "types": [],
-    "declaration": true,
-    "outDir": "./lib",
-    "rootDir": "./src",
+    "types": ["node"],
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -14,9 +11,7 @@
     "noUnusedParameters": true,
     "skipLibCheck": true,
     "erasableSyntaxOnly": true,
-    "isolatedDeclarations": true
+    "noEmit": true
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src", "test"]
 }
