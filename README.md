@@ -39,6 +39,16 @@ test('serializes', () => {
 
 ## Supported ANSI codes
 
+Escape sequences will be made human readable in snapshots in the form of XML-like tags:
+
+```xml
+<!-- \x1B[1B -->
+<cursor.down count=1>
+
+<!-- \x1B[34mfoo\x1B[39m -->
+<blue>foo</fg>
+```
+
 The following ANSI codes are supported:
 
 <ul>
@@ -88,77 +98,24 @@ The following ANSI codes are supported:
 
 <li>
 <details>
-<summary>Style codes</summary>
+<summary>Style and color codes</summary>
 <br />
 
-| Code  | Description         | Serialization       |
-| ----- | ------------------- | ------------------- |
-| `0m`  | Reset               | `<reset>`           |
-| `1m`  | Bold                | `<bold>`            |
-| `2m`  | Dim                 | `<dim>`             |
-| `3m`  | Italic              | `<italic>`          |
-| `4m`  | Underline           | `<underline>`       |
-| `5m`  | Blink               | `<blink>`           |
-| `7m`  | Inverse             | `<inverse>`         |
-| `8m`  | Hidden              | `<hidden>`          |
-| `9m`  | Strikethrough       | `<strikethrough>`   |
-| `21m` | Double underline    | `<doubleunderline>` |
-| `51m` | Framed              | `<framed>`          |
-| `53m` | Overlined           | `<overlined>`       |
-| `22m` | Reset bold          | `</bold>`           |
-| `23m` | Reset italic        | `</italic>`         |
-| `24m` | Reset underline     | `</underline>`      |
-| `25m` | Reset blink         | `</blink>`          |
-| `27m` | Reset inverse       | `</inverse>`        |
-| `28m` | Reset hidden        | `</hidden>`         |
-| `29m` | Reset strikethrough | `</strikethrough>`  |
-| `54m` | Reset framed        | `</framed>`         |
-| `55m` | Reset overlined     | `</overlined>`      |
+Style codes will be serialized as `<style>` and `</style>` tags:
 
-</details>
-</li>
+```xml
+<!-- \x1B[1mfoo\x1B[22m and \x1B[4mbar\x1B[24m -->
+<bold>foo</bold> and <underline>bar</underline>
+```
 
-<li>
-<details>
-<summary>Color codes</summary>
-<br />
+Foreground and background colors will be serialized as `<color>` and `<bg:color>`. Resets are `</fg>` and `</bg>`:
 
-| Code   | Description                | Serialization        |
-| ------ | -------------------------- | -------------------- |
-| `30m`  | Black                      | `<black>`            |
-| `31m`  | Red                        | `<red>`              |
-| `32m`  | Green                      | `<green>`            |
-| `33m`  | Yellow                     | `<yellow>`           |
-| `34m`  | Blue                       | `<blue>`             |
-| `35m`  | Magenta                    | `<magenta>`          |
-| `36m`  | Cyan                       | `<cyan>`             |
-| `37m`  | White                      | `<white>`            |
-| `39m`  | Default (reset)            | `</fg>`              |
-| `90m`  | Bright black               | `<grey>`             |
-| `91m`  | Bright red                 | `<redBright>`        |
-| `92m`  | Bright green               | `<greenBright>`      |
-| `93m`  | Bright yellow              | `<yellowBright>`     |
-| `94m`  | Bright blue                | `<blueBright>`       |
-| `95m`  | Bright magenta             | `<magentaBright>`    |
-| `96m`  | Bright cyan                | `<cyanBright>`       |
-| `97m`  | Bright white               | `<whiteBright>`      |
-| `40m`  | Background black           | `<bg:black>`         |
-| `41m`  | Background red             | `<bg:red>`           |
-| `42m`  | Background green           | `<bg:green>`         |
-| `43m`  | Background yellow          | `<bg:yellow>`        |
-| `44m`  | Background blue            | `<bg:blue>`          |
-| `45m`  | Background magenta         | `<bg:magenta>`       |
-| `46m`  | Background cyan            | `<bg:cyan>`          |
-| `47m`  | Background white           | `<bg:white>`         |
-| `49m`  | Default background (reset) | `</bg>`              |
-| `100m` | Background bright black    | `<bg:grey>`          |
-| `101m` | Background bright red      | `<bg:redBright>`     |
-| `102m` | Background bright green    | `<bg:greenBright>`   |
-| `103m` | Background bright yellow   | `<bg:yellowBright>`  |
-| `104m` | Background bright blue     | `<bg:blueBright>`    |
-| `105m` | Background bright magenta  | `<bg:magentaBright>` |
-| `106m` | Background bright cyan     | `<bg:cyanBright>`    |
-| `107m` | Background bright white    | `<bg:whiteBright>`   |
+```xml
+<!-- \x1B[34mfoo\x1B[39m and \x1B[41mbar\x1B[49m -->
+<blue>foo</fg> and <bg:red>bar</bg>
+```
+
+The list of all supported colors can be found in [colors.ts](./src/colors.ts).
 
 </details>
 </li>
@@ -181,16 +138,6 @@ The following ANSI codes are supported:
 </details>
 </li>
 </ul>
-
-These will be made human readable in snapshots in the form of XML-like tags:
-
-```xml
-<!-- \x1B[1B -->
-<cursor.down count=1>
-
-<!-- \x1B[34mfoo\x1B[39m -->
-<blue>foo</fg>
-```
 
 See [main.test.ts.snap](./test/__snapshots__/main.test.ts.snap) for more examples of what this looks like.
 
