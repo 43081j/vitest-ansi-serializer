@@ -1,7 +1,7 @@
-import {styleText} from 'node:util';
-import {cursor, erase, scroll} from 'sisteransi';
-import {expect, SnapshotSerializer, suite, test} from 'vitest';
+import {test, expect, suite, SnapshotSerializer} from 'vitest';
 import ansiSerializer from '../src/main.js';
+import {cursor, erase, scroll} from 'sisteransi';
+import {styleText} from 'node:util';
 
 type NewSnapshotSerializer = Exclude<SnapshotSerializer, {print: unknown}>;
 
