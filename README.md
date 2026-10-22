@@ -115,7 +115,7 @@ Foreground and background colors will be serialized as `<color>` and `<bg:color>
 <blue>foo</fg> and <bg:red>bar</bg>
 ```
 
-The list of all supported colors can be found in [colors.ts](./src/colors.ts).
+The list of all supported colors can be found in [codes.ts](./src/codes.ts).
 
 </details>
 </li>
